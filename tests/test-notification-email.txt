@@ -1,14 +1,41 @@
+From: aws.test@devnard.net
+To: ${TO_ADDRESS}
+Subject: ${SUBJECT}
+MIME-Version: 1.0
+Content-type: Multipart/Mixed; boundary="NextPart"
+
+--NextPart
+Content-Type: text/plain
+
 The attached content triggered a Web DLP rule for your organisation.
+No action is required on your part.
 
 Transaction ID: ${TRANSACTION_ID}
 User Accessing the URL: ${USER}
 Client IP: ${IP}
 URL Accessed: ${URL}
-Posting Type: ${TYPE}
+Site Category: ${TYPE}
 Time Detected: ${TIMESTAMP}
 DLP MD5: ${DLPMD5}
-DLP Violation Engines: ${ENGINES}
-DLP Violation Dictionaries: ${DICTIONARIES}
-DLP Triggers: ${TRIGGERS}
+DLP Violation Engines: PCI
+DLP Violation Dictionaries: 
 
-No action is required on your part.
+---------------------------------------
+Dictionary Name       | Match Count   
+---------------------------------------
+Credit Cards          | ${MATCH_COUNT}
+---------------------------------------
+
+Triggered on: 
+---------------------------------------
+File: ${ATTACHMENT_FILENAME}
+---------------------------------------
+${MATCHED_LIST}
+
+--NextPart
+Content-Type: text/plain;
+Content-Disposition: attachment; filename="${ATTACHMENT_FILENAME}.txt"
+
+${ATTACHMENT_CONTENT}
+
+--NextPart--',
