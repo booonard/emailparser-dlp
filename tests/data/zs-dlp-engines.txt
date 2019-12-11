@@ -1,0 +1,4 @@
+HIPAA
+GLBA
+PCI
+Offensive Language
