@@ -6,6 +6,7 @@ from string import Template
 import uuid
 import datetime
 import hashlib
+import boto3
 
 def valid_number(value):
     n = int(value)
@@ -33,7 +34,7 @@ def generate_alert(since):
     attachment_content = " ".join(words)
 
     # generate data for alert
-    transaction_id = uuid.uuid4()
+    transaction_id = str(uuid.uuid4())
     url = random.choice(urls).strip()
     site_category = random.choice(site_types).strip()
     user = random.choice(first_names).strip().lower() + "." + random.choice(surnames).strip().lower() + "@somecompany.com.au"
@@ -66,29 +67,56 @@ def generate_alert(since):
         ATTACHMENT_CONTENT = attachment_content)
 
     alert_details = {
-        "timestamp": timestamp, \
-        "alert_email": alert_email
+        "timestamp": timestamp, 
+        "alert_email": alert_email,
+        "email_subject" : email_subject, 
+        "alert_id": transaction_id
     }
     return(alert_details)
 
-def output_local_filesystem(alert_email):
-    print("creating file on local filesystem")
 
-def output_ses(alert_email):
-    print("sending email via ses")
+def save_as_file(alert_id, alert_email):
 
-def output_s3(alert_email):
-    print("uploading file to s3")
+    local_filename = "output/" + alert_id
+    alert_file = open(local_filename, "a")
+    alert_file.write(alert_email)
+    alert_file.close()
+    print("Created file " + local_filename)
 
+def email_with_ses(alert_email, email_subject):
+
+    client = boto3.client('ses')
+
+    client.send_raw_email(
+        RawMessage={ 'Data': alert_email }
+    )
+
+    print("Emailed alert with SES to " + to_address + " with subject " + email_subject)
+
+
+def upload_to_s3(alert_id, alert_email):
+    
+    bucket_name = "mailparser-rawmail"
+
+    client = boto3.client('s3')
+    client.put_object(Body=alert_email, Bucket=bucket_name, Key=alert_id)
+    
+    print("Uploaded to S3 bucket {} with object name: {}".format(bucket_name, alert_id))
+
+
+OUTPUT_TYPE_FILE = "file"
+OUTPUT_TYPE_SES = "ses"
+OUTPUT_TYPE_S3 = "s3"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-n", default=10, type=valid_number)
-parser.add_argument("-o", default="local", type=str, choices=["local", "ses", "s3"])
+parser.add_argument("-o", default=OUTPUT_TYPE_FILE, type=str, choices=[OUTPUT_TYPE_FILE, OUTPUT_TYPE_SES, OUTPUT_TYPE_S3])
 
 args = parser.parse_args()
 num_alerts = args.n
 output_type = args.o
 
+print("Generating {} alerts for output to {}".format(num_alerts, output_type))
 to_address = "mailparsertest@devnard.net"
 
 # load email template
@@ -126,19 +154,19 @@ sentences = sentences_file.readlines()
 sentences_file.close()
 
 # start create test email
-start_time = datetime.datetime.now()
+alert_time_from = datetime.datetime.now()
 
 for n in range(num_alerts):
-    alert_details = generate_alert(start_time)
+    alert_details = generate_alert(alert_time_from)
     alert_email = alert_details["alert_email"]
-    print(alert_email)
+    alert_id = alert_details["alert_id"]
+    email_subject = alert_details["email_subject"]
 
-    if output_type == "local":
-        output_local_filesystem(alert_email)
-    elif output_type == "ses":
-        output_ses(alert_email)
-    elif output_type == "s3":
-        output_s3(alert_email)
+    if output_type == OUTPUT_TYPE_SES:
+        email_with_ses(alert_email, email_subject)
+    elif output_type == OUTPUT_TYPE_FILE:
+        save_as_file(alert_id, alert_email)
+    elif output_type == OUTPUT_TYPE_S3:
+        upload_to_s3(alert_id, alert_email)       
     
-    alert_time = alert_details["timestamp"]    
-    start_time = alert_time
+    alert_time_from = alert_details["timestamp"]    
