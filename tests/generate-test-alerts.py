@@ -117,7 +117,9 @@ num_alerts = args.n
 output_type = args.o
 
 print("Generating {} alerts for output to {}".format(num_alerts, output_type))
-to_address = "mailparsertest@devnard.net"
+#to_address = "mailparsertest@devnard.net"
+to_address = "mailparsertest@devnard.net, booonard@hotmail.com"
+
 
 # load email template
 email_alert_file = open("test-notification-email.txt")

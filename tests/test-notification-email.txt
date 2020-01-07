@@ -16,7 +16,7 @@ Client IP: ${IP}
 URL Accessed: ${URL}
 Site Category: ${TYPE}
 Time Detected: ${TIMESTAMP}
-DLP MD5: ${DLPMD5}
+File Content MD5: ${DLPMD5}
 DLP Violation Engines: PCI
 DLP Violation Dictionaries: 
 
@@ -35,7 +35,5 @@ ${MATCHED_LIST}
 --NextPart
 Content-Type: text/plain;
 Content-Disposition: attachment; filename="${ATTACHMENT_FILENAME}.txt"
-
 ${ATTACHMENT_CONTENT}
-
---NextPart--',
+--NextPart--

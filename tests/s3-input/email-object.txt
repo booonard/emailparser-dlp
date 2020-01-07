@@ -1,0 +1,76 @@
+Return-Path: <0100016ef9f58d6f-ba25f12c-7ff2-48f3-b3ad-3ada0116bf36-000000@amazonses.com>
+Received: from a8-77.smtp-out.amazonses.com (a8-77.smtp-out.amazonses.com [54.240.8.77])
+ by inbound-smtp.us-east-1.amazonaws.com with SMTP id 851p6ej9dki5oophp6qkb52brovmq6p5klmvvg81
+ for mailparsertest@devnard.net;
+ Thu, 12 Dec 2019 11:54:10 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of amazonses.com designates 54.240.8.77 as permitted sender) client-ip=54.240.8.77; envelope-from=0100016ef9f58d6f-ba25f12c-7ff2-48f3-b3ad-3ada0116bf36-000000@amazonses.com; helo=a8-77.smtp-out.amazonses.com;
+Authentication-Results: amazonses.com;
+ spf=pass (spfCheck: domain of amazonses.com designates 54.240.8.77 as permitted sender) client-ip=54.240.8.77; envelope-from=0100016ef9f58d6f-ba25f12c-7ff2-48f3-b3ad-3ada0116bf36-000000@amazonses.com; helo=a8-77.smtp-out.amazonses.com;
+ dkim=pass header.i=@amazonses.com;
+ dkim=pass header.i=@devnard.net;
+ dmarc=none header.from=devnard.net;
+X-SES-RECEIPT: AEFBQUFBQUFBQUFIQ3l1REhlV0I0NWFXME1mRGFxYmIwdHdZdTloN3JqYmFnWDhxTHVvQVZJbzJ3NGZQcDZwcHBYYVpFMWJSNVlCV0ZVQTZYeFRTMnl0aXpBQnFQSjVZVlVwakxBTEpJbVJmU1oxTkczK3dyWGY0bXFOOUMwdnBkWldqVzRHaEFUZDROQ3BqS05KV2d1QVVhNXk5cmV6azYxVHVKYXN3WFBIeGt6VWM4Y2RhaVpaV0pwdGhZYXlVWFdRWnBEdC9DMHFpS01DZmFMeU01OUtXakEvbTZ0MkxUNzZvOWZkbzE3NXlSZ2hjOUFnVXBvSmZCZmg5VnFUN3Z6czRJcVN2SWFHTzZMcjUycUhHdldMV0ZENWdJcHNxQ25CL3EydEFJSEcwUmQ3MnRzaHdkM1NsUnNZeXgxVnVOKzhEdFZ4Z2FlN0lzK3N2dTdnaHFjSmFKV1dXYkFzejVHZmxad1Q4bXZISU84cTFBL3cvL0tBPT0=
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; b=F7PUPQ62rITG7S5UFWP85w5FZJucP84xn7S8I0groseqkoi+LvzbAfzdJCUal0oaTolGzQwX7cyXFVxHf53KUf/LJ6URtpKCt5VzxwxHrNwsAy5iIyVXdKAh6sYvdexzX+nO6HCw0/eWSHSUlgrSN5Phme5v7MmWgfbRVw2zCVM=; c=relaxed/simple; s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1576151650; v=1; bh=0PREA/WSddsb36AHSW50R4F+iOBX6MrMqoFgLyECies=; h=From:To:Cc:Bcc:Subject:Date:Message-ID:MIME-Version:Content-Type:X-SES-RECEIPT;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=4s5dmbp52w2misphtilbgseqb7qogjmh; d=devnard.net; t=1576151650;
+	h=From:To:Subject:MIME-Version:Content-type:Message-ID:Date;
+	bh=0PREA/WSddsb36AHSW50R4F+iOBX6MrMqoFgLyECies=;
+	b=nSIkN9iaGm2GMwwL2gL/5A5jwfWu/EfejvRVwe8FRPtDpW8ULIiKaDTjIRC7sdEZ
+	G5jE2T1jqNudSUJ+fkllBSldX9X5vXJ1KkSEj7h7uJEgwpJX8BVIdcrI3ML67B9H++x
+	GoI3eoDsTxWvUri/E2S3pR3Lgnk8luC7UqFP9408=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1576151650;
+	h=From:To:Subject:MIME-Version:Content-type:Message-ID:Date:Feedback-ID;
+	bh=0PREA/WSddsb36AHSW50R4F+iOBX6MrMqoFgLyECies=;
+	b=DGinr8Wem9NZopeemlfccq2O7fJn3UeYT/I5W1ceeFLi7DTKRvev7L9UV/bcPizs
+	HuKoViQMqEW+9jEemLjUMUB55Nsm/Pgb7I/RtG1mvOWESdyicX6tGKOqGBBNPsYqVMo
+	2LAhpZ0ZdLm2HH8d6GM7VTp4789gYTh6X7uZ6JQw=
+From: aws.test@devnard.net
+To: mailparsertest@devnard.net, booonard@hotmail.com
+Subject: Web DLP Violation - frederico.rogers@somecompany.com.au [b6e548eb-5982-4e9c-a174-c77136854664]
+MIME-Version: 1.0
+Content-type: Multipart/Mixed; boundary="NextPart"
+Message-ID: <0100016ef9f58d6f-ba25f12c-7ff2-48f3-b3ad-3ada0116bf36-000000@email.amazonses.com>
+Date: Thu, 12 Dec 2019 11:54:09 +0000
+X-SES-Outgoing: 2019.12.12-54.240.8.77
+Feedback-ID: 1.us-east-1.2zetrtg4KYe9NCzhtmhRIoOEBhFIM7VbF3F3l3GiSeU=:AmazonSES
+
+--NextPart
+Content-Type: text/plain
+
+The attached content triggered a Web DLP rule for your organisation.
+No action is required on your part.
+
+Transaction ID: b6e548eb-5982-4e9c-a174-c77136854664
+User Accessing the URL: frederico.rogers@somecompany.com.au
+Client IP: 10.0.59.54
+URL Accessed: http://icio.us/sit.js
+Site Category: Collaboration & Online Meetings
+Time Detected: Thu Dec 12 22:57:08 2019
+File Content MD5: f7e572844318bec9bf9d721ba728b029
+DLP Violation Engines: PCI
+DLP Violation Dictionaries: 
+
+---------------------------------------
+Dictionary Name       | Match Count   
+---------------------------------------
+Credit Cards          | 4
+---------------------------------------
+
+Triggered on: 
+---------------------------------------
+File: interdum in.tiff
+---------------------------------------
+3569366121121737
+201953382244249
+3549927901565545
+3574514288886625
+
+--NextPart
+Content-Type: text/plain;
+Content-Disposition: attachment; filename="interdum in.tiff.txt"
+
+"Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi 3569366121121737 quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, 3549927901565545 201953382244249 3574514288886625 justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui."
+--NextPart--
